@@ -13,10 +13,12 @@ public class GenAIController {
 
     private final ChatService chatService;
     private final ImageService imageService;
+    private final RecipeService recipeService;
 
-    public GenAIController(ChatService chatService, ImageService imageService) {
+    public GenAIController(ChatService chatService, ImageService imageService, RecipeService recipeService) {
         this.chatService = chatService;
         this.imageService = imageService;
+        this.recipeService = recipeService;
     }
 
     @GetMapping("/ask-ai")
@@ -31,14 +33,21 @@ public class GenAIController {
 
     @GetMapping("/generate-image")
     public List<String> getResponseOptions(@RequestParam String prompt,
-                                                     @RequestParam(defaultValue = "hd") String quality,
-                                                     @RequestParam(defaultValue = "1") int n,
-                                                     @RequestParam(defaultValue = "1024") int height,
-                                                     @RequestParam(defaultValue = "1024") int width) throws IOException {
+                                           @RequestParam(defaultValue = "hd") String quality,
+                                           @RequestParam(defaultValue = "1") int n,
+                                           @RequestParam(defaultValue = "1024") int height,
+                                           @RequestParam(defaultValue = "1024") int width) throws IOException {
         return imageService.generateImage(prompt, quality, n, height, width)
                 .getResults()
                 .stream()
                 .map(result -> result.getOutput().getUrl())
                 .toList();
+    }
+
+    @GetMapping("/create-recipe")
+    public String getResponseOptions(@RequestParam String ingredients,
+                                     @RequestParam(defaultValue = "any") String cuisine,
+                                     @RequestParam(defaultValue = "none") String dietaryRestrictions) throws IOException {
+        return recipeService.generateRecipe(ingredients, cuisine, dietaryRestrictions);
     }
 }
