@@ -17,7 +17,7 @@ public class RecipeService {
     public String generateRecipe(String ingredients, String cuisine, String dietaryRestrictions) {
         String template = """
                 I want to create a recipe using the following ingredients: %s.
-                The cuisine type i prefer is %s.
+                The cuisine type I prefer is %s.
                 Consider the following dietary restrictions: %s.
                 Provide me with detailed recipe including title, list of ingredients and cooking instructions.
                 """;

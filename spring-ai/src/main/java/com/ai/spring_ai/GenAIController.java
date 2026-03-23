@@ -1,11 +1,9 @@
 package com.ai.spring_ai;
 
-import org.jspecify.annotations.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -36,7 +34,7 @@ public class GenAIController {
                                            @RequestParam(defaultValue = "hd") String quality,
                                            @RequestParam(defaultValue = "1") int n,
                                            @RequestParam(defaultValue = "1024") int height,
-                                           @RequestParam(defaultValue = "1024") int width) throws IOException {
+                                           @RequestParam(defaultValue = "1024") int width) {
         return imageService.generateImage(prompt, quality, n, height, width)
                 .getResults()
                 .stream()
@@ -47,7 +45,7 @@ public class GenAIController {
     @GetMapping("/create-recipe")
     public String getResponseOptions(@RequestParam String ingredients,
                                      @RequestParam(defaultValue = "any") String cuisine,
-                                     @RequestParam(defaultValue = "none") String dietaryRestrictions) throws IOException {
+                                     @RequestParam(defaultValue = "none") String dietaryRestrictions) {
         return recipeService.generateRecipe(ingredients, cuisine, dietaryRestrictions);
     }
 }
