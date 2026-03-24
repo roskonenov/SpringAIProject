@@ -56,8 +56,19 @@ input:focus {
   outline-color: rgb(103, 103, 103);
 }
 
+.input-container {
+  position: relative;
+}
+
+label {
+  position: absolute;
+  left: 15%;
+  top: -8px;
+}
+
 .response-container {
   width: 90%;
+  max-width: 850px;
   background-color: #c5c5c5;
   color: #424242;
   border-radius: 30px;
@@ -67,6 +78,7 @@ input:focus {
 
 .response-container p {
   text-align: left;
+  white-space: pre-wrap;
 }
 
 .cursor {
@@ -76,4 +88,29 @@ input:focus {
 @keyframes blink {
   0%, 50%, 100% {opacity: 1;}
   25%, 75% {opacity: 0;}
+}
+
+.image-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 20px;
+  margin: 20px auto;
+  width: 90%;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  border: 2px solid #9f9f9f;
+  border-radius: 5px;
+}
+
+.empty-slot {
+  width: 100%;
+  /* height: 0; */
+  border: 3px dashed #ccc;
+  border-radius: 5px;
+  background-color: #f4f4f4;
+  padding-bottom: 75%;
 }
