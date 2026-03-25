@@ -16,16 +16,18 @@ const AskAi = () => {
     return (
         <div>
             <h2>Talk to AI</h2>
-            <input type="text"
-                placeholder='Enter your prompt to AI'
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-            />
-            <button className='sec-btn' onClick={askAi}>Ask AI</button>
+            <div className='input-container'>
+                <input type="text"
+                    placeholder='Enter your prompt to AI'
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                />
+                <button className='sec-btn' onClick={askAi}>Ask AI</button>
+            </div>
             {chatResponse &&
                 <div className='response-container'>
                     <p className='typing'>{displayText}
-                    <span className='cursor'>|</span>
+                        <span className='cursor'>|</span>
                     </p>
                 </div>}
         </div>

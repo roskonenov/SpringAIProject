@@ -13,23 +13,25 @@ const ImageGenerator = () => {
   return (
     <div>
       <h2>ImageGenerator</h2>
-      <input
-        type="text"
-        value={prompt}
-        placeholder='Describe the image you want'
-        onChange={(e) => setPrompt(e.target.value)}
-      />
-      <button
-        className="sec-btn"
-        onClick={generateImage}
-      >
-        Generate Image
-      </button>
+      <div className="input-container">
+        <input
+          type="text"
+          value={prompt}
+          placeholder='Describe the image you want'
+          onChange={(e) => setPrompt(e.target.value)}
+        />
+        <button
+          className="sec-btn"
+          onClick={generateImage}
+        >
+          Generate Image
+        </button>
+      </div>
 
       <div className="image-container">
         {imageUrls.map((url, index) => (
           <a href={url} key={index} target="_blank">
-            <img  src={url} alt={`Generated ${index}`} />
+            <img src={url} alt={`Generated ${index}`} />
           </a>
         ))}
         {[...Array(4 - imageUrls.length)].map((_, index) => (
