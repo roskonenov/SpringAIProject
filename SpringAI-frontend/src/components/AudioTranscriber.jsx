@@ -12,19 +12,16 @@ const AudioTranscriber = () => {
     const displayText = useTypingText(transcribtion, 25);
 
     const handleFileTranscribtion = async () => {
-        if(!file.type.startsWith('audio/')) return;
+        if(!file || !file.type.startsWith('audio/')) return;
 
         const formData = new FormData();
         formData.append('file', file)
 
      await fetch('http://localhost:8080/ai-transcribe-audio', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        },
         body: formData
-     }).then(res => res.text())
-     .then(data => setTranscribtion(data))
+     }).then(res => res.json())
+     .then(data => setTranscribtion(data.text))
      .catch(err => console.error("Error transcribe audio : ", err));
 
     }
