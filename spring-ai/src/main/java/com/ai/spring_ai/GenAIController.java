@@ -1,9 +1,12 @@
 package com.ai.spring_ai;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -12,11 +15,13 @@ public class GenAIController {
     private final ChatService chatService;
     private final ImageService imageService;
     private final RecipeService recipeService;
+    private final AudioTranscribeService audioTranscribeService;
 
-    public GenAIController(ChatService chatService, ImageService imageService, RecipeService recipeService) {
+    public GenAIController(ChatService chatService, ImageService imageService, RecipeService recipeService, AudioTranscribeService audioTranscribeService) {
         this.chatService = chatService;
         this.imageService = imageService;
         this.recipeService = recipeService;
+        this.audioTranscribeService = audioTranscribeService;
     }
 
     @GetMapping("/ask-ai")
@@ -47,5 +52,10 @@ public class GenAIController {
                                      @RequestParam(defaultValue = "any") String cuisine,
                                      @RequestParam(defaultValue = "none") String dietaryRestrictions) {
         return recipeService.generateRecipe(ingredients, cuisine, dietaryRestrictions);
+    }
+
+    @PostMapping("/ai-transcribe-audio")
+    public String transcribeAudio(@RequestParam MultipartFile file) throws IOException {
+        return audioTranscribeService.transcribeAudio(file);
     }
 }
