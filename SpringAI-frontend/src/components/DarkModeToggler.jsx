@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 
 const DarkModeToggler = () => {
-      const [isDark, setIsDark] = useState(
-        localStorage.getItem('dark-mode') ||
-        window.matchMedia("(prefers-color-scheme: dark)").matches
-      );
+    const [isDark, setIsDark] = useState(() => {
+        const savedMode = localStorage.getItem('dark-mode');
+        if (savedMode !== null) {
+            return savedMode === 'true';
+        }
+        return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    });
 
-      useEffect(() => {
-    if (isDark) {
-      document.documentElement.setAttribute('data-theme', 'dark');
+    useEffect(() => {
+        isDark
+            ? document.documentElement.setAttribute('data-theme', 'dark')
+            : document.documentElement.removeAttribute('data-theme');
 
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-    }
-    localStorage.setItem('dark-mode', String(isDark));
-  }, [isDark]);
+        localStorage.setItem('dark-mode', String(isDark));
+    }, [isDark]);
 
     return (
         <div>
