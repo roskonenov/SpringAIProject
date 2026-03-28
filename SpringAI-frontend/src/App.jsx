@@ -1,51 +1,45 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import AskAi from './components/AskAi';
 import ImageGenerator from './components/ImageGenerator';
 import CreateRecipe from './components/CreateRecipe';
 import DarkModeToggler from './components/DarkModeToggler';
+import AudioTranscriber from './components/AudioTranscriber';
 
 function App() {
-  const [isDark, setIsDark] = useState(
-    localStorage.getItem('dark-mode')
-  );
   const [selectedTab, setSelectedTab] = useState('ask-ai');
-
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-    }
-    localStorage.setItem('dark-mode', String(isDark));
-  }, [isDark]);
-
   return (
     <>
-      <DarkModeToggler
-        isDark={isDark}
-        onChange={setIsDark}
-      />
+      <DarkModeToggler />
       <div className='button-container'>
+
         <button
           className={selectedTab === 'ask-ai' ? 'focus' : ''}
           onClick={() => setSelectedTab('ask-ai')}
         >Ask AI</button>
+
         <button
           className={selectedTab === 'generate-image' ? 'focus' : ''}
           onClick={() => setSelectedTab('generate-image')}
         >Generate Image</button>
+
         <button
           className={selectedTab === 'create-recipe' ? 'focus' : ''}
           onClick={() => setSelectedTab('create-recipe')}
         >Create Recipe</button>
+
+        <button
+          className={selectedTab === 'transcribe-audio' ? 'focus' : ''}
+          onClick={() => setSelectedTab('transcribe-audio')}
+        >Audio Transcriber</button>
+
       </div>
 
       <div>
         {selectedTab === 'ask-ai' && <AskAi />}
         {selectedTab === 'generate-image' && <ImageGenerator />}
         {selectedTab === 'create-recipe' && <CreateRecipe />}
+        {selectedTab === 'transcribe-audio' && <AudioTranscriber />}
       </div>
     </>
   )
