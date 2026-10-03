@@ -1,15 +1,30 @@
 import React, { useState } from 'react'
 import useTypingText from '../hooks/useTypingText';
+import Spinner from './Spinner';
+import { API_BASE_URL } from '../config';
 
 const AskAi = () => {
     const [prompt, setPrompt] = useState('');
     const [chatResponse, setChatResponse] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const askAi = async () => {
-        await fetch(`http://localhost:8080/ask-ai-options?prompt=${prompt}`)
-            .then(res => res.text())
-            .then(data => { setChatResponse(data) })
-            .catch(err => console.error("Error generating response : ", err));
+        if (!prompt.trim() || isLoading) return;
+        setIsLoading(true);
+        setChatResponse('');
+        try {
+            const res = await fetch(`${API_BASE_URL}/ask-ai-options?prompt=${encodeURIComponent(prompt)}`);
+            if (!res.ok) {
+                throw new Error(`Server error: ${res.status}`);
+            }
+            const data = await res.text();
+            setChatResponse(data);
+        } catch (err) {
+            console.error("Error generating response : ", err);
+            setChatResponse(`Failed to connect to AI server (${err.message}).`);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const displayText = useTypingText(chatResponse, 25);
@@ -21,10 +36,15 @@ const AskAi = () => {
                     placeholder='Enter your prompt to AI'
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && askAi()}
+                    disabled={isLoading}
                 />
-                <button className='sec-btn' onClick={askAi}>Ask AI</button>
+                <button className='sec-btn' onClick={askAi} disabled={isLoading}>
+                    {isLoading ? 'Thinking...' : 'Ask AI'}
+                </button>
             </div>
-            {chatResponse &&
+            {isLoading && <Spinner text="AI is thinking..." />}
+            {!isLoading && chatResponse &&
                 <div className='response-container'>
                     <p className='typing'>{displayText}
                         <span className='cursor'>|</span>

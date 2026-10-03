@@ -1,0 +1,60 @@
+﻿name: Deploy Frontend to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'SpringAI-frontend/**'
+      - '.github/workflows/deploy-frontend.yml'
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: spring-ai-service-183314
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: SpringAI-frontend/package-lock.json
+
+      - name: Install Dependencies
+        working-directory: SpringAI-frontend
+        run: npm ci
+
+      - name: Build Frontend
+        working-directory: SpringAI-frontend
+        run: npm run build
+
+      - name: Authenticate Service Account
+        env:
+          KEY_DATA: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          if [ -z "$KEY_DATA" ]; then
+            echo "::error::GCP_SA_KEY secret is empty or missing! Please add it in repository Secrets."
+            exit 1
+          fi
+
+          if echo "$KEY_DATA" | base64 -d > /tmp/gcp_sa_key.json 2>/dev/null && grep -q "private_key" /tmp/gcp_sa_key.json; then
+            echo "Successfully loaded service account key from Base64."
+          else
+            echo "Loading service account key from raw text."
+            echo "$KEY_DATA" > /tmp/gcp_sa_key.json
+          fi
+
+          echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcp_sa_key.json" >> "$GITHUB_ENV"
+
+      - name: Deploy to Firebase Hosting
+        working-directory: SpringAI-frontend
+        run: |
+          npx firebase-tools deploy --only hosting --project ${{ env.PROJECT_ID }} --non-interactive
