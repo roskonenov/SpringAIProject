@@ -28,7 +28,6 @@ public class AudioTranscribeService {
         transcriptionModel = new OpenAiAudioTranscriptionModel(openAiAudioApi);
     }
 
-
     public String transcribeAudio(MultipartFile file) throws IOException {
         File tempFile = File.createTempFile("audio", ".wav");
         file.transferTo(tempFile);

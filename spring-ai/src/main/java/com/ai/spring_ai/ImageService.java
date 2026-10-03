@@ -21,7 +21,7 @@ public class ImageService {
                         prompt,
                         OpenAiImageOptions
                                 .builder()
-                                .model("Lykon/DreamShaper")
+                                .model("stabilityai/stable-diffusion-xl-base-1.0")
                                 .quality(quality)
                                 .N(n)
                                 .height(height)

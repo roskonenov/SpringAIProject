@@ -24,7 +24,7 @@ public class ChatService {
                         prompt,
                         OpenAiChatOptions
                                 .builder()
-                                .model("ServiceNow-AI/Apriel-1.6-15b-Thinker")
+                                .model("Qwen/Qwen3.5-9B")
                                 .temperature(0.4)
                                 .build()
                 )

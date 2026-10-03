@@ -17,11 +17,11 @@ const AudioTranscriber = () => {
         const formData = new FormData();
         formData.append('file', file)
 
-     await fetch('http://localhost:8080/ai-transcribe-audio', {
+    await fetch('http://localhost:8080/ai-transcribe-audio', {
         method: 'POST',
         body: formData
-     }).then(res => res.json())
-     .then(data => setTranscribtion(data.text))
+     }).then(res => res.text())
+     .then(data => setTranscribtion(data))
      .catch(err => console.error("Error transcribe audio : ", err));
 
     }

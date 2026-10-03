@@ -1,0 +1,13 @@
+# Root .gitignore
+*.key
+*.pem
+*sa-key*.json
+*.mp3
+
+# IntelliJ
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
