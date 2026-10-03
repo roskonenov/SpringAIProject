@@ -55,7 +55,7 @@ jobs:
           image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
           env_vars: |
             TOGETHER_AI_API_KEY=${{ secrets.TOGETHER_AI_API_KEY }}
-            FRONTEND_URL=${{ secrets.FRONTEND_URL }}
+            FRONTEND_URL=${{ secrets.FRONTEND_URL || 'http://localhost:5173' }}
           flags: '--allow-unauthenticated --memory=1Gi --cpu=1'
 
       - name: Show Service URL
