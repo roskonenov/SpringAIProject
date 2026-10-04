@@ -8,6 +8,9 @@
 .idea/
 *.iml
 
+# Firebase
+.firebase/
+
 # OS
 .DS_Store
 Thumbs.db
