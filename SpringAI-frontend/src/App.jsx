@@ -6,6 +6,7 @@ import CreateRecipe from './components/CreateRecipe';
 import DarkModeToggler from './components/DarkModeToggler';
 import AudioTranscriber from './components/AudioTranscriber';
 import { FiTerminal, FiImage, FiCpu, FiMic, FiActivity } from 'react-icons/fi';
+import brainLogo from './assets/brain.svg';
 
 const TABS = [
   { id: 'ask-ai', label: 'Ask AI', subtitle: 'Neural Chat', icon: FiTerminal },
@@ -27,7 +28,7 @@ function App() {
       <header className="cyber-header">
         <div className="header-brand">
           <div className="logo-badge">
-            <img src="/brain.svg" alt="SpringAI Logo" className="brand-logo" />
+            <img src={brainLogo} alt="SpringAI Logo" className="brand-logo" />
             <span className="logo-pulse-ring"></span>
           </div>
           <div className="brand-text">
