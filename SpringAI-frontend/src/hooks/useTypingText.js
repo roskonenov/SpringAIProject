@@ -1,22 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-export default function useTypingText(fullText, speed = 50) {
-    const [text, setText] = useState('');
-    const [index, setIndex] = useState(0);
+export default function useTypingText(fullText, speed = 20) {
+  const [prevFullText, setPrevFullText] = useState(fullText);
+  const [displayedLength, setDisplayedLength] = useState(0);
 
-    useEffect(() => {
-        setText('');
-        setIndex(0);
-    }, [fullText]);
+  if (fullText !== prevFullText) {
+    setPrevFullText(fullText);
+    setDisplayedLength(0);
+  }
 
-    useEffect(() => {
-        if(index < fullText.length) {
-            const timeout = setTimeout(() => {
-                setText(t => t + fullText[index]);
-                setIndex(i => i + 1);
-            }, speed);
-            return () => clearTimeout(timeout);
-        }
-    }, [index, fullText, speed]);
-    return text;
-} 
+  useEffect(() => {
+    if (!fullText || displayedLength >= fullText.length) return;
+
+    const timer = setTimeout(() => {
+      setDisplayedLength((prev) => prev + 1);
+    }, speed);
+
+    return () => clearTimeout(timer);
+  }, [fullText, displayedLength, speed]);
+
+  return fullText ? fullText.slice(0, displayedLength) : '';
+}
+ 

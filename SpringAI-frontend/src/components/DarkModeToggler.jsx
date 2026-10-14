@@ -1,33 +1,38 @@
 import { useEffect, useState } from "react";
+import { FiSun, FiMoon } from "react-icons/fi";
 
 const DarkModeToggler = () => {
     const [isDark, setIsDark] = useState(() => {
-        const savedMode = localStorage.getItem('dark-mode');
+        const savedMode = localStorage.getItem('springai-theme');
         if (savedMode !== null) {
-            return savedMode === 'true';
+            return savedMode === 'dark';
         }
-        return window.matchMedia("(prefers-color-scheme: dark)").matches;
+        // Ensure default is always the requested green-blue-black cyber dark
+        return true;
     });
 
     useEffect(() => {
-        isDark
-            ? document.documentElement.setAttribute('data-theme', 'dark')
-            : document.documentElement.removeAttribute('data-theme');
-
-        localStorage.setItem('dark-mode', String(isDark));
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        localStorage.setItem('springai-theme', isDark ? 'dark' : 'light');
     }, [isDark]);
 
     return (
-        <div>
-            <button
-                className="dark-mode"
-                role='switch'
-                aria-checked={isDark}
-                onClick={() => setIsDark(isDark => !isDark)}>
-                {isDark ? '☀️ Light Mode' : '🌙 Dark Mode'}
-            </button>
-        </div>
-    )
-}
+        <button
+            className="futuristic-theme-toggle"
+            role="switch"
+            aria-checked={isDark}
+            aria-label="Toggle visual theme"
+            onClick={() => setIsDark(prev => !prev)}
+            title={isDark ? "Switch to Light Protocol" : "Switch to Cyber Dark Mode"}
+        >
+            <span className={`toggle-track ${isDark ? 'is-dark' : 'is-light'}`}>
+                <span className="toggle-thumb">
+                    {isDark ? <FiMoon className="toggle-icon moon" /> : <FiSun className="toggle-icon sun" />}
+                </span>
+            </span>
+            <span className="toggle-label">{isDark ? 'CYBER DARK' : 'LIGHT MATRIX'}</span>
+        </button>
+    );
+};
 
-export default DarkModeToggler
+export default DarkModeToggler;
