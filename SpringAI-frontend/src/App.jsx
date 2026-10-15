@@ -83,8 +83,9 @@ function App() {
                     {isActive && <span className="icon-pulse-glow" aria-hidden="true" />}
                   </span>
                   <span className="tab-text-block">
-                    <span className="tab-label-row">
-                      <span className="tab-label">{tab.label}</span>
+                    <span className="tab-label">{tab.label}</span>
+                    <span className="tab-sub-row">
+                      <span className="tab-subtitle">{tab.subtitle}</span>
                       {isActive && (
                         <span className="tab-active-badge">
                           <span className="active-dot" />
@@ -92,7 +93,6 @@ function App() {
                         </span>
                       )}
                     </span>
-                    <span className="tab-subtitle">{tab.subtitle}</span>
                   </span>
                 </div>
                 {isActive && <span className="tab-active-indicator" />}

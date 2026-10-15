@@ -9,7 +9,7 @@
   flex-direction: column;
   position: relative;
   padding: 0 24px;
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -268,8 +268,8 @@
 .tab-dock {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  padding: 10px;
+  gap: 12px;
+  padding: 8px 10px;
   background: var(--tab-dock-bg);
   border: 1px solid var(--tab-dock-border);
   border-radius: 18px;
@@ -284,7 +284,7 @@
   display: block;
   position: relative;
   overflow: hidden;
-  padding: 14px 16px;
+  padding: 12px 14px;
   background: var(--tab-btn-bg);
   border: 1.5px solid var(--tab-btn-border);
   border-radius: 14px;
@@ -298,7 +298,7 @@
 .tab-content-layout {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   position: relative;
   z-index: 2;
 }
@@ -325,8 +325,8 @@
 }
 
 .tab-icon-wrapper {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -340,40 +340,47 @@
 }
 
 .tab-icon {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   transition: transform 0.25s ease;
 }
 
 .tab-text-block {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   overflow: hidden;
   flex: 1;
 }
 
-.tab-label-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
 .tab-label {
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 0.94rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
   color: var(--text-primary);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: all 0.25s ease;
 }
 
+.tab-sub-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 3px;
+  min-height: 18px;
+}
+
 .tab-subtitle {
-  font-size: 0.72rem;
+  font-size: 0.70rem;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 2px;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: all 0.25s ease;
 }
 
@@ -425,15 +432,18 @@ button.focus {
   align-items: center;
   gap: 4px;
   font-family: var(--font-display);
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   font-weight: 800;
-  letter-spacing: 1px;
-  padding: 2px 7px;
+  letter-spacing: 0.8px;
+  padding: 1px 6px;
   border-radius: 4px;
   background: rgba(0, 255, 157, 0.2);
   border: 1px solid #00ff9d;
   color: #00ff9d;
-  box-shadow: 0 0 10px rgba(0, 255, 157, 0.4);
+  box-shadow: 0 0 8px rgba(0, 255, 157, 0.4);
+  flex-shrink: 0;
+  white-space: nowrap;
+  line-height: 1.2;
 }
 
 .active-dot {
@@ -1322,7 +1332,7 @@ button.focus {
 /* ==========================================================================
    Responsive Breakpoints
    ========================================================================== */
-@media (max-width: 900px) {
+@media (max-width: 1040px) {
   .tab-dock {
     grid-template-columns: repeat(2, 1fr);
   }
